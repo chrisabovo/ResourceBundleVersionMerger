@@ -1,0 +1,31 @@
+{
+  "name": "resource-bundle-version-merger",
+  "version": "1.0.0",
+  "description": "A Resource Bundle Version Merger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisabovo/ResourceBundleVersionMerger.git"
+  },
+  "keywords": [
+    "Resource",
+    "Bundle",
+    "Version",
+    "Merger",
+    "JS",
+    "Properties"
+  ],
+  "author": "chrisabovo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisabovo/ResourceBundleVersionMerger/issues"
+  },
+  "homepage": "https://github.com/chrisabovo/ResourceBundleVersionMerger#readme",
+  "devDependencies": {
+    "ts-lint": "^4.5.1",
+    "typescript": "^3.1.1"
+  }
+}
