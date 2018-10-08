@@ -21,3 +21,5 @@ https://itnext.io/step-by-step-building-and-publishing-an-npm-typescript-package
 https://github.com/caki0915/my-awesome-greeter
 
 https://www.npmjs.com/package/my-awesome-greeter
+
+https://github.com/richie5um/vscode-sort-json/blob/master/lib/lodash-sortkeys.js
