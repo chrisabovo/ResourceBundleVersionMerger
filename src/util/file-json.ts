@@ -13,7 +13,7 @@ export class FileJSON {
       }
 
       // foi informado o caminho de um arquivo físico do JSON, carregar ele.
-      const jsonObj: object = loadJsonFile.sync(jsonFile);
+      const jsonObj: any = loadJsonFile.sync(jsonFile);
 
       // quebrar a chave em um array.
       const keys: string[] = keyValue.key;
@@ -89,7 +89,7 @@ export class FileJSON {
   public static loadJSONKeyValue(json: object | string, callback: (error: string | null, result: IKeyValue[] | null) => void) {
     try {
       const ret: IKeyValue[] = new Array<IKeyValue>();
-      let jsonObj: object;
+      let jsonObj: any;
 
       if (typeof json === 'object') {
         jsonObj = json;
@@ -118,7 +118,7 @@ export class FileJSON {
     }
   }
 
-  private static loadJSONKeyValueSon(json: object, keyDad: string[], list: IKeyValue[]) {
+  private static loadJSONKeyValueSon(json: any, keyDad: string[], list: IKeyValue[]) {
     Object.keys(json).forEach(key => {
       const keySon: string[] = UtilObject.clone(keyDad);
       keySon.push(key);

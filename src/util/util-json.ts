@@ -4,7 +4,7 @@ export class UtilJSON {
       // console.log('JSON.parse =>', value);
       if (val !== undefined && typeof val === 'string' && val.search(new RegExp('u002f', 'i')) === 0) {
         let ret: string = val.toString();
-        let flags: string;
+        let flags;
         // remove a barra inicial.
         ret = ret.replace(new RegExp('u002f', 'i'), '');
         // troca todos os caracteres u005Cu002F <=> \/
@@ -43,7 +43,7 @@ export class UtilJSON {
         // console.log('JSON.parse =>', value);
         if (val !== undefined && typeof val === 'string' && val.search(new RegExp('u002f', 'i')) === 0) {
           let ret: string = val.toString();
-          let flags: string;
+          let flags;
           // remove a barra inicial.
           ret = ret.replace(new RegExp('u002f', 'i'), '');
           // troca todos os caracteres u005Cu002F <=> \/

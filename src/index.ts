@@ -1,13 +1,29 @@
-export const Greeter = (name: string) => `Hello ${name}`;
+import * as commander from 'commander';
+import * as fs from 'fs';
 
-console.log('Hello, world!');
-var program = require('commander');
+let packageJson;
+if (fs.existsSync('./package.json')) {
+  // tslint:disable-next-line:no-var-requires
+  packageJson = require('./package.json');
+} else {
+  // tslint:disable-next-line:no-var-requires
+  packageJson = require('../package.json');
+}
 
-program
-  .arguments('<file>')
-  .option('-u, --username <username>', 'The user to authenticate as')
-  .option('-p, --password <password>', "The user's password")
-  .action(function(file) {
-    console.log('user: %s pass: %s file: %s', program.username, program.password, file);
-  })
-  .parse(process.argv);
+commander
+  .version(packageJson.version, '-v, --version')
+  .arguments('rbvm <newFile> <oldFile> <outputMergedFile>')
+  // .option('-u, --username <username>', 'The user to authenticate as')
+  // .option('-p, --password <password>', "The user's password")
+  .action((newFile, oldFile, outputMergedFile) => {
+    console.log('rbvm newFile: %s oldFile: %s outputMergedFile: %s', newFile, oldFile, outputMergedFile);
+  });
+
+commander.on('--help', () => {
+  console.log('');
+  console.log('Examples:');
+  console.log('  $ rbvm --help');
+  console.log('  $ rbvm -h');
+});
+
+commander.parse(process.argv);
