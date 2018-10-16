@@ -40,6 +40,10 @@ Generate a new version:
 
 - npm publish
 
+NPM Repository
+
+- https://www.npmjs.com/package/resource-bundle-version-merger
+
 Thanks a lot to Carl-Johan Kihl with this amazing tutorial.
 
 https://itnext.io/step-by-step-building-and-publishing-an-npm-typescript-package-44fe7164964c
