@@ -1,5 +1,6 @@
-import * as commander from 'commander';
-import * as fs from 'fs';
+import commander from 'commander';
+import fs from 'fs';
+import { RBVM } from './rbvm';
 
 let packageJson;
 if (fs.existsSync('./package.json')) {
@@ -12,11 +13,17 @@ if (fs.existsSync('./package.json')) {
 
 commander
   .version(packageJson.version, '-v, --version')
-  .arguments('rbvm <newFile> <oldFile> <outputMergedFile>')
-  // .option('-u, --username <username>', 'The user to authenticate as')
-  // .option('-p, --password <password>', "The user's password")
-  .action((newFile, oldFile, outputMergedFile) => {
-    console.log('rbvm newFile: %s oldFile: %s outputMergedFile: %s', newFile, oldFile, outputMergedFile);
+  .arguments('rbvm <oldFile> <newFile> <outputMergedFile>')
+  .action((oldFile: any, newFile: any, outputMergedFile: any) => {
+    console.log('!!!! rbvm oldFile: %s newFile: %s outputMergedFile: %s', oldFile, newFile, outputMergedFile);
+
+    RBVM.merge(oldFile, newFile, outputMergedFile, (error, result) => {
+      if (error) {
+        console.error('Merged Error ->', error);
+      } else {
+        console.info('Merged Completed!');
+      }
+    });
   });
 
 commander.on('--help', () => {
@@ -24,6 +31,9 @@ commander.on('--help', () => {
   console.log('Examples:');
   console.log('  $ rbvm --help');
   console.log('  $ rbvm -h');
+  console.log('  $ rbvm -v');
+  console.log('  $ rbvm <oldFile> <newFile> <outputMergedFile>');
+  console.log('  $ rbvm language.pt-BR.v1.js language.pt-BR.v2.js language.pt-BR.js');
 });
 
 commander.parse(process.argv);

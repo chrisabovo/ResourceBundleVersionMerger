@@ -14,6 +14,10 @@ Examples
 
 - rbvm language.pt-BR.v1.js language.pt-BR.v2.js language.pt-BR.js
 
+- rbvm .\samples\test_1_json\language.pt-BR.v1.json .\samples\test_1_json\language.pt-BR.v2.json .\samples\test_1_json\language.pt-BR.v3.json
+
+- node ./lib/index.js .\samples\test_1_json\language.pt-BR.v1.json .\samples\test_1_json\language.pt-BR.v2.json .\samples\test_1_json\language.pt-BR.v3.json
+
 Thanks a lot to Carl-Johan Kihl with this amazing tutorial.
 
 https://itnext.io/step-by-step-building-and-publishing-an-npm-typescript-package-44fe7164964c

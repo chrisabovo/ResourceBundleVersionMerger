@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "run": "node ./lib/index.js",
     "test": "jest --config jestconfig.json",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
@@ -16,7 +17,7 @@
     "postversion": "git push && git push --tags"
   },
   "bin": {
-    "rbvm": "./index.js"
+    "rbvm": "./bin/index.js"
   },
   "repository": {
     "type": "git",

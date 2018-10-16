@@ -5,84 +5,31 @@ import { UtilJSON } from './util-json';
 import { UtilObject } from './util-object';
 
 export class FileJSON {
-  public static changeJSONKeyValue(jsonFile: string, keyValue: IKeyValue, callback: (error: string | null, result: boolean | null) => void) {
+  public static updateJSONKeyValue(jsonFile: string, keyValue: IKeyValue, callback: (error: string, result: boolean) => void) {
     try {
       if (!fs.existsSync(jsonFile)) {
-        callback('File not founded!', null);
+        callback('File not found: ' + jsonFile, false);
         return;
       }
 
       // foi informado o caminho de um arquivo físico do JSON, carregar ele.
-      const jsonObj: any = loadJsonFile.sync(jsonFile);
+      let jsonObj: object = loadJsonFile.sync(jsonFile);
 
       // quebrar a chave em um array.
       const keys: string[] = keyValue.key;
 
       // atualiza o valor da chave.
-      switch (keys.length) {
-        case 1:
-          jsonObj[keys[0]] = keyValue.value;
-          break;
-        case 2:
-          jsonObj[keys[0]][keys[1]] = keyValue.value;
-          break;
-        case 3:
-          jsonObj[keys[0]][keys[1]][keys[2]] = keyValue.value;
-          break;
-        case 4:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]] = keyValue.value;
-          break;
-        case 5:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]] = keyValue.value;
-          break;
-        case 6:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]] = keyValue.value;
-          break;
-        case 7:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]] = keyValue.value;
-          break;
-        case 8:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]] = keyValue.value;
-          break;
-        case 9:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]] = keyValue.value;
-          break;
-        case 10:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]] = keyValue.value;
-          break;
-        case 11:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]][keys[10]] = keyValue.value;
-          break;
-        case 12:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]][keys[10]][keys[11]] = keyValue.value;
-          break;
-        case 13:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]][keys[10]][keys[11]][keys[12]] = keyValue.value;
-          break;
-        case 14:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]][keys[10]][keys[11]][keys[12]][keys[13]] =
-            keyValue.value;
-          break;
-        case 15:
-          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]][keys[10]][keys[11]][keys[12]][keys[13]][keys[14]] =
-            keyValue.value;
-          break;
-
-        default:
-          callback('It´s not possible change the JSON File, they support only 15 levels.', null);
-          return; // sai da função se cair no default.
+      jsonObj = this.updateKeyValue(jsonObj, keys, keyValue.value);
+      if (jsonObj === null) {
+        callback('Error on change JSON file. Support only 10 levels on JSON.', false);
+        return;
       }
 
-      // gravando o arquivo json depois de alterado.
-      fs.writeFile(jsonFile, UtilJSON.stringify(jsonObj), err => {
-        if (err) {
-          callback(err.code + ' - ' + err.message, false);
-        } else {
-          callback(null, true);
-        }
-      });
+      // gravando o arquivo json depois de alterado - GRAVA SINCRONO para evitar colisão.
+      fs.writeFileSync(jsonFile, UtilJSON.stringify(jsonObj));
+      callback('', true);
     } catch (e) {
-      callback(e, null);
+      callback(e, false);
     }
   }
 
@@ -132,5 +79,86 @@ export class FileJSON {
         });
       }
     });
+  }
+
+  private static updateKeyValue(jsonObj: any, keys: string[], value: string): any {
+    try {
+      switch (keys.length) {
+        case 1:
+          jsonObj[keys[0]] = value;
+          break;
+        case 2:
+          jsonObj[keys[0]][keys[1]] = value;
+          break;
+        case 3:
+          jsonObj[keys[0]][keys[1]][keys[2]] = value;
+          break;
+        case 4:
+          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]] = value;
+          break;
+        case 5:
+          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]] = value;
+          break;
+        case 6:
+          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]] = value;
+          break;
+        case 7:
+          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]] = value;
+          break;
+        case 8:
+          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]] = value;
+          break;
+        case 9:
+          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]] = value;
+          break;
+        case 10:
+          jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]] = value;
+          break;
+
+        default:
+          return null;
+      }
+
+      return jsonObj;
+    } catch {
+      // if not is an update, create key before update.
+      jsonObj = this.createKeys(jsonObj, keys);
+      return this.updateKeyValue(jsonObj, keys, value);
+    }
+  }
+
+  private static createKeys(jsonObj: any, keys: string[]): object {
+    if (keys.length >= 1 && jsonObj[keys[0]] === undefined) {
+      jsonObj[keys[0]] = {};
+    }
+    if (keys.length >= 2 && jsonObj[keys[0]][keys[1]] === undefined) {
+      jsonObj[keys[0]][keys[1]] = {};
+    }
+    if (keys.length >= 3 && jsonObj[keys[0]][keys[1]][keys[2]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]] = {};
+    }
+    if (keys.length >= 4 && jsonObj[keys[0]][keys[1]][keys[2]][keys[3]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]][keys[3]] = {};
+    }
+    if (keys.length >= 5 && jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]] = {};
+    }
+    if (keys.length >= 6 && jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]] = {};
+    }
+    if (keys.length >= 7 && jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]] = {};
+    }
+    if (keys.length >= 8 && jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]] = {};
+    }
+    if (keys.length >= 9 && jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]] = {};
+    }
+    if (keys.length >= 10 && jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]] === undefined) {
+      jsonObj[keys[0]][keys[1]][keys[2]][keys[3]][keys[4]][keys[5]][keys[6]][keys[7]][keys[8]][keys[9]] = {};
+    }
+
+    return jsonObj;
   }
 }

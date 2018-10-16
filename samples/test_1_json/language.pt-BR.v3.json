@@ -1,11 +1,11 @@
 {
   "TESTE1": {
     "TESTE1_1": {
-      "TESTE1_1_1": "Teste - 1.1.1"
+      "TESTE1_1_1": "Teste 1.1.1"
     },
     "TESTE1_2": {
-      "TESTE1_2_1": "Teste - 1.2.1",
-      "TESTE1_2_2": "Teste - 1.2.2"
+      "TESTE1_2_1": "Teste 1.2.1",
+      "TESTE1_2_2": "Teste 1.2.2"
     }
   },
   "TESTE3": {
