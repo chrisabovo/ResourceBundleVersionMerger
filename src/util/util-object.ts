@@ -1,19 +1,4 @@
-import { Validator } from './validator';
-
 export class UtilObject {
-  public static transferValues<T>(obj1: T, obj2: T): T {
-    const ret: T = obj1;
-
-    const objectKeys = Object.keys(obj2) as Array<keyof T>;
-    for (const key of objectKeys) {
-      if (!Validator.isNullUndefinedEmpty(obj2[key])) {
-        ret[key] = obj2[key];
-      }
-    }
-
-    return ret;
-  }
-
   public static clone<T>(obj: T): T {
     return JSON.parse(JSON.stringify(obj));
   }
