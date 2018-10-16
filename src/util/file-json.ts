@@ -12,7 +12,7 @@ export class FileJSON {
         return;
       }
 
-      let jsonObj: object = loadJsonFile.sync(jsonFile);
+      let jsonObj: object | null = loadJsonFile.sync(jsonFile);
 
       const keys: string[] = keyValue.key;
 
