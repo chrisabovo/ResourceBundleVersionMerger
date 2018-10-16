@@ -30,6 +30,16 @@ How run in debug mode:
 
 - node ./lib/index.js .\samples\test_1_json\language.pt-BR.v1.json .\samples\test_1_json\language.pt-BR.v2.json .\samples\test_1_json\language.pt-BR.v3.json
 
+Generate a new version:
+
+- git add -A && git commit -m "Setup Package"
+
+- git push
+
+- npm version patch
+
+- npm publish
+
 Thanks a lot to Carl-Johan Kihl with this amazing tutorial.
 
 https://itnext.io/step-by-step-building-and-publishing-an-npm-typescript-package-44fe7164964c
