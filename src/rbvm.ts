@@ -4,6 +4,10 @@ import { IKeyValue } from './model/ikey-value';
 import { FileJSON } from './util/file-json';
 
 export class RBVM {
+  public static test(): boolean {
+    return true;
+  }
+
   public static merge(oldFile: any, newFile: any, outputMergedFile: any, callback: (error: string | null, result: boolean | null) => void) {
     // loading oldFile.
     FileJSON.loadJSONKeyValue(oldFile, (errorOld, resultOld) => {
