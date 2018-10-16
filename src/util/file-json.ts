@@ -12,20 +12,17 @@ export class FileJSON {
         return;
       }
 
-      // foi informado o caminho de um arquivo físico do JSON, carregar ele.
       let jsonObj: object = loadJsonFile.sync(jsonFile);
 
-      // quebrar a chave em um array.
       const keys: string[] = keyValue.key;
 
-      // atualiza o valor da chave.
       jsonObj = this.updateKeyValue(jsonObj, keys, keyValue.value);
       if (jsonObj === null) {
         callback('Error on change JSON file. Support only 10 levels on JSON.', false);
         return;
       }
 
-      // gravando o arquivo json depois de alterado - GRAVA SINCRONO para evitar colisão.
+      // write sync.
       fs.writeFileSync(jsonFile, UtilJSON.stringify(jsonObj));
       callback('', true);
     } catch (e) {

@@ -4,37 +4,37 @@ import { FileJSON } from './util/file-json';
 
 export class RBVM {
   public static merge(oldFile: any, newFile: any, outputMergedFile: any, callback: (error: string | null, result: boolean | null) => void) {
-    // carregando o oldFile.
+    // loading oldFile.
     FileJSON.loadJSONKeyValue(oldFile, (errorOld, resultOld) => {
       if (errorOld) {
         callback(errorOld, null);
       } else if (resultOld === null) {
         callback('Error: oldFile is invalid file!', null);
       } else {
-        console.log('resultOld =>', resultOld);
+        // console.log('resultOld =>', resultOld);
 
-        // carregando o newFile.
+        // loading newFile.
         FileJSON.loadJSONKeyValue(newFile, (errorNew, resultNew) => {
           if (errorNew) {
             callback(errorNew, null);
           } else if (resultNew === null) {
             callback('Error: newFile is invalid file!', null);
           } else {
-            console.log('resultNew =>', resultNew);
+            // console.log('resultNew =>', resultNew);
 
-            // caso já exista exclui o arquivo outputMergedFile.
+            // if exist delete outputMergedFile.
             if (fs.existsSync(outputMergedFile)) {
               fs.unlinkSync(outputMergedFile);
             }
 
-            // criando o arquivo outputMergedFile vazio.
+            // create empty JSON outputMergedFile.
             fs.writeFileSync(outputMergedFile, '{}');
 
-            // construindo o outputMergedFile.
+            // merging outputMergedFile.
             this.mergeOldNew(resultOld, resultNew, outputMergedFile, 0, (errorMerge: any, resultMerge: any) => {
-              // callback(errorMerge, resultMerge);
+              callback(errorMerge, resultMerge);
 
-              //
+              /* just for debug
               FileJSON.loadJSONKeyValue(outputMergedFile, (errorTeste, resultTeste) => {
                 if (errorTeste) {
                   callback(errorTeste, null);
@@ -44,7 +44,7 @@ export class RBVM {
                   callback(errorMerge, resultMerge);
                 }
               });
-              //
+              */
             });
           }
         });
