@@ -1,4 +1,5 @@
 ﻿import fs from 'fs';
+import * as loadJsonFile from 'load-json-file';
 import { IKeyValue } from './model/ikey-value';
 import { FileJSON } from './util/file-json';
 
@@ -30,26 +31,87 @@ export class RBVM {
             // create empty JSON outputMergedFile.
             fs.writeFileSync(outputMergedFile, '{}');
 
-            // merging outputMergedFile.
-            this.mergeOldNew(resultOld, resultNew, outputMergedFile, 0, (errorMerge: any, resultMerge: any) => {
-              callback(errorMerge, resultMerge);
+            // merge and sort.
+            this.mergeAndSort(resultOld, resultNew, 0, [], (errorMerge: any, resultMerge: any) => {
+              if (errorMerge) {
+                callback(errorMerge, null);
+              } else {
+                // write sorted file.
+                this.writeMerged(outputMergedFile, resultMerge, 0, (errorWrite: any, resultWrite: any) => {
+                  if (errorWrite) {
+                    callback(errorWrite, null);
+                  } else {
+                    // format file.
+                    const jsonObj = loadJsonFile.sync(outputMergedFile);
+                    fs.writeFileSync(outputMergedFile, JSON.stringify(jsonObj, null, 2));
 
-              /* just for debug
-              FileJSON.loadJSONKeyValue(outputMergedFile, (errorTeste, resultTeste) => {
-                if (errorTeste) {
-                  callback(errorTeste, null);
-                } else {
-                  console.log('resultMerge =>', resultTeste);
-
-                  callback(errorMerge, resultMerge);
-                }
-              });
-              */
+                    // return.
+                    callback(errorWrite, resultWrite);
+                  }
+                });
+              }
             });
           }
         });
       }
     });
+  }
+
+  private static mergeAndSort(
+    resultOld: IKeyValue[],
+    resultNew: IKeyValue[],
+    newIndex: number,
+    resultMerged: IKeyValue[],
+    callback: (error: string | null, result: IKeyValue[]) => void,
+  ) {
+    if (newIndex < resultNew.length) {
+      const newKeys = resultNew[newIndex].key.join('.');
+
+      const oldArr = resultOld.filter(x => x.key.join('.') === newKeys);
+
+      if (oldArr.length > 0) {
+        resultNew[newIndex].value = oldArr[0].value;
+      }
+
+      resultMerged.push(resultNew[newIndex]);
+
+      this.mergeAndSort(resultOld, resultNew, newIndex + 1, resultMerged, callback);
+    } else {
+      // sort.
+      resultMerged = resultMerged.sort((a: IKeyValue, b: IKeyValue) => {
+        const keyA = a.key.join('.').toLowerCase();
+        const keyB = b.key.join('.').toLowerCase();
+        if (keyA < keyB) {
+          return -1;
+        }
+        if (keyA > keyB) {
+          return 1;
+        }
+        return 0;
+      });
+
+      // return merged and sorted.
+      callback(null, resultMerged);
+    }
+  }
+
+  private static writeMerged(
+    outputMergedFile: any,
+    resultMerged: IKeyValue[],
+    mergedIndex: number,
+    callback: (error: string | null, result: boolean | null) => void,
+  ) {
+    if (mergedIndex < resultMerged.length) {
+      FileJSON.updateJSONKeyValue(outputMergedFile, resultMerged[mergedIndex], (errorMerge, resultMerge) => {
+        if (errorMerge) {
+          callback(errorMerge, null);
+        } else {
+          this.writeMerged(outputMergedFile, resultMerged, mergedIndex + 1, callback);
+        }
+      });
+    } else {
+      callback(null, true);
+    }
   }
 
   private static mergeOldNew(
