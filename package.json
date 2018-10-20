@@ -17,7 +17,7 @@
     "postversion": "git push && git push --tags"
   },
   "bin": {
-    "rbvm": "./bin/index.js"
+    "rbvm": "./lib/index.js"
   },
   "repository": {
     "type": "git",
