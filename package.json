@@ -1,6 +1,6 @@
 {
   "name": "resource-bundle-version-merger",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "A Resource Bundle Version Merger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -17,7 +17,7 @@
     "postversion": "git push && git push --tags"
   },
   "bin": {
-    "rbvm": "./bin/index.js"
+    "rbvm": "./lib/index.js"
   },
   "repository": {
     "type": "git",
