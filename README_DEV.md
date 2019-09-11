@@ -1,5 +1,8 @@
 ﻿# ResourceBundleVersionMerger - Dev Doc
 
+How build:
+
+
 How run in debug mode:
 
 - In VSCODE just press F5 or in command line
@@ -13,6 +16,8 @@ Generate a new version:
 - git push
 
 - npm version patch
+
+- npm login
 
 - npm publish
 

@@ -1,11 +1,10 @@
 {
   "name": "resource-bundle-version-merger",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Resource Bundle Version Merger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "run": "node ./lib/index.js",
     "test": "jest --config jestconfig.json",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
@@ -15,9 +14,6 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
-  },
-  "bin": {
-    "rbvm": "./lib/index.js"
   },
   "repository": {
     "type": "git",
@@ -52,5 +48,8 @@
     "fs": "0.0.2",
     "load-json-file": "^6.2.0",
     "lodash": "^4.17.15"
-  }
+  },
+  "files": [
+    "lib /**/*"
+  ]
 }

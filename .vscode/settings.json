@@ -1,16 +1,15 @@
 {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    },
-    "editor.formatOnSave": true,
-    "editor.renderWhitespace": "all",
-    "editor.tabSize": 2,
-    "files.encoding": "utf8bom",
-    "prettier.singleQuote": true,
-    "prettier.printWidth": 160,
-    "todohighlight.isEnable": true,
-    "todohighlight.toggleURI": true,
-    "workbench.colorTheme": "Winter is Coming (Dark)",
-    "git.ignoreLimitWarning": true
-  }
-  
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "all",
+  "editor.tabSize": 2,
+  "files.encoding": "utf8bom",
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 160,
+  "todohighlight.isEnable": true,
+  "todohighlight.toggleURI": true,
+  "workbench.colorTheme": "Winter is Coming (Dark)",
+  "git.ignoreLimitWarning": true
+}
