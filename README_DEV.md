@@ -1,7 +1,7 @@
 ﻿# ResourceBundleVersionMerger - Dev Doc
 
 How build:
-
+- npm run build
 
 How run in debug mode:
 
