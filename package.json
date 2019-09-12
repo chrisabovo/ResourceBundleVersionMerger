@@ -2,8 +2,8 @@
   "name": "resource-bundle-version-merger",
   "version": "1.0.16",
   "description": "A Resource Bundle Version Merger",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc",
@@ -15,7 +15,10 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
-  "preferGlobal": "true",
+  "preferGlobal": true,
+  "engines": {
+    "node": ">=8"
+  },
   "bin": {
     "rbvm": "./lib/index.js"
   },
@@ -32,6 +35,7 @@
     "Properties"
   ],
   "author": "chrisabovo",
+  "contributors": [],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/chrisabovo/ResourceBundleVersionMerger/issues"
