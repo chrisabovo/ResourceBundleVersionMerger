@@ -3,13 +3,13 @@
 import commander from 'commander';
 import { RBVM } from './rbvm';
 
-let helpMessage = () => {
+const helpMessage = () => {
   console.log('');
   console.log('Example:');
   console.log('  $ rbvm language.pt-BR.v1.js language.pt-BR.v2.js language.pt-BR.v3.js');
 };
 
-var myArgs = process.argv.slice(2);
+const myArgs = process.argv.slice(2);
 if (myArgs.length === 0) {
   helpMessage();
 } else {
