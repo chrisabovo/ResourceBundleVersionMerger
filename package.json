@@ -2,8 +2,8 @@
   "name": "resource-bundle-version-merger",
   "version": "1.0.17",
   "description": "A Resource Bundle Version Merger",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc",
@@ -54,8 +54,7 @@
   "dependencies": {
     "commander": "^3.0.1",
     "fs": "0.0.2",
-    "load-json-file": "^6.2.0",
-    "lodash": "^4.17.15"
+    "load-json-file": "^6.2.0"
   },
   "files": [
     "lib /**/*"
