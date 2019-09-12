@@ -57,6 +57,6 @@
     "load-json-file": "^6.2.0"
   },
   "files": [
-    "lib /**/*"
+    "lib/**/*"
   ]
 }
